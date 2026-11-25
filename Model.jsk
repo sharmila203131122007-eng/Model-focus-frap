@@ -1,0 +1,33 @@
+import React, { useEffect, useRef } from "react";
+
+function Modal({ isOpen, onClose }) {
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+
+    if (isOpen && dialog) {
+      dialog.showModal();
+    } else if (dialog?.open) {
+      dialog.close();
+    }
+  }, [isOpen]);
+
+  return (
+    <dialog
+      ref={dialogRef}
+      aria-labelledby="modal-title"
+      onCancel={(e) => {
+        e.preventDefault();
+        onClose();
+      }}
+      onClose={onClose}
+    >
+      <h2 id="modal-title">Welcome!</h2>
+      <p>This is an accessible modal dialog.</p>
+      <button onClick={onClose}>Close</button>
+    </dialog>
+  );
+}
+
+export default Modal;
